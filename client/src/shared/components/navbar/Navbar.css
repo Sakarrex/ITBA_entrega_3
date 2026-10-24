@@ -1,0 +1,276 @@
+.site-header {
+  background-color: #a0522d;
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.site-header .nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+}
+
+.site-header .nav-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.site-header .nav-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.site-header .nav-toggle img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.site-header .nav-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.site-header .nav-logo img {
+  width: 40px;
+  height: 40px;
+  background-color: #f5e6d3;
+  border-radius: 50%;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.site-header .nav-logo-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f5e6d3;
+  line-height: 1.1;
+  transition: color 0.3s ease;
+}
+
+.site-header .nav-logo:hover .nav-logo-text {
+  color: #d4a437;
+}
+
+.site-header .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.site-header .nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 16px;
+  right: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(160, 82, 45, 0.98),
+    rgba(120, 62, 35, 0.98)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 22px;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.22);
+  padding: 18px 18px 16px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, -12px, 0) scale(0.98);
+  transition:
+    opacity 0.28s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.35s ease;
+}
+
+.site-header .nav-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.site-header .nav-menu li {
+  width: 100%;
+}
+
+.site-header .nav-menu a {
+  display: block;
+  text-decoration: none;
+  color: #f5e6d3;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 10px 8px;
+  border-radius: 10px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.site-header .nav-menu a:hover,
+.site-header .nav-menu a:focus-visible {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #d4a437;
+}
+
+.site-header .nav-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.site-header .nav-cart:hover {
+  transform: scale(1.1);
+}
+
+.site-header .nav-cart img {
+  width: 26px;
+  height: 26px;
+}
+
+.site-header .nav-cart-count {
+  position: absolute;
+  top: -2px;
+  right: -6px;
+  min-width: 20px;
+  padding: 0 5px;
+  background-color: #d4a437;
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .site-header {
+    padding: 18px 0;
+  }
+
+  .site-header .nav {
+    gap: 24px;
+    padding: 0 24px;
+  }
+
+  .site-header .nav-logo {
+    margin-right: 0;
+  }
+
+  .site-header .nav-logo img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .site-header .nav-logo-text {
+    font-size: 1.3rem;
+  }
+
+  .site-header .nav-actions {
+    gap: 12px;
+  }
+
+  .site-header .nav-menu {
+    top: calc(100% + 12px);
+    left: 24px;
+    right: 24px;
+    padding: 20px 20px 18px;
+  }
+
+  .site-header .nav-menu a {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-header .nav {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .site-header .nav-logo {
+    position: static;
+    transform: none;
+    margin-right: auto;
+  }
+
+  .site-header .nav-actions {
+    margin-left: auto;
+  }
+
+  .site-header .nav-toggle {
+    display: none;
+  }
+
+  .site-header .nav-menu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: row;
+    width: auto;
+    margin: 0;
+    gap: 24px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    right: auto;
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .site-header .nav-menu li {
+    width: auto;
+  }
+
+  .site-header .nav-menu a {
+    display: inline-block;
+    padding: 0;
+    font-size: 1.2rem;
+  }
+
+  .site-header .nav-menu a:hover,
+  .site-header .nav-menu a:focus-visible {
+    background-color: transparent;
+  }
+
+  .site-header .nav-cart {
+    margin-left: auto;
+  }
+}
