@@ -1,0 +1,23 @@
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: muebleria-jota-mongodb
+    restart: unless-stopped
+    ports:
+      - '${MONGO_PORT:-27017}:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:?Definí MONGO_ROOT_USERNAME en .env}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Definí MONGO_ROOT_PASSWORD en .env}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-muebleria_jota}
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test:
+        ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  mongodb_data:

@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix client\"",
-    "install:all": "npm install && npm install --prefix backend && npm install --prefix client",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix client && npm run db:up",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "db:seed": "npm run seed --prefix backend",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

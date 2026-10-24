@@ -2,7 +2,7 @@
 
 Repositorio para el trabajo integrador grupal del grupo 6 Comisión 1 TT. Consiste en una página de e-commerce para una mueblería ficticia: Hermanos Jota.
 
-Esta es la **segunda entrega**: la página de la primera entrega (HTML, CSS y JavaScript vanilla) se reescribió con el stack MERN. El frontend ahora es una aplicación React que consume una API propia desarrollada con Node.js y Express.
+Esta es la **Tercera entrega**: A la aplicación de react creada en la entrega 2 se le añadieron: Almacenamiento de datos en base de datos MongoDB loca (Corriendo dentro de docker para compatibilidad), Axios para las llamadas de la API Backend y React hook form y Yup para la validación de modelos.
 
 Integrantes:
 
@@ -15,13 +15,43 @@ Integrantes:
 ## Ejecución
 
 Se necesita Node.js y npm instalados. Para clonar el repositorio e instalar las
-dependencias de la raíz, el backend y el cliente, ejecutar desde la raíz:
+dependencias de la raíz, el backend y el cliente, además de levantar MongoDB,
+se necesita Docker Desktop (con el motor de Docker iniciado). Antes de ejecutar
+la instalación, crear el archivo local de variables de entorno:
 
 ```bash
-git clone https://github.com/Sakarrex/ITBA_entrega_2.git
-cd ITBA_entrega_2
+git clone https://github.com/Sakarrex/ITBA_entrega_3.git
+cd ITBA_entrega_3
+cp .env.example .env
 npm run install:all
 ```
+
+En PowerShell, usar `Copy-Item .env.example .env` en lugar de `cp`. El archivo
+`.env` contiene credenciales locales de desarrollo y no se sube al repositorio;
+`.env.example` sí está versionado. Cambiar las credenciales locales si fuera
+necesario y mantener sincronizados `MONGO_ROOT_USERNAME`,
+`MONGO_ROOT_PASSWORD` y `MONGODB_URI`.
+
+`npm run install:all` instala las dependencias y ejecuta `docker compose up -d
+--wait` para iniciar el contenedor MongoDB. Para operar la base por separado:
+
+```bash
+npm run db:up
+npm run db:down
+```
+
+`db:down` detiene y elimina el contenedor, pero conserva los datos del volumen
+Docker `mongodb_data`.
+
+El catálogo actual está definido en `backend/data/productos.js`. Para copiarlo a
+la colección `productos` de MongoDB, ejecutar el seed manualmente:
+
+```bash
+npm run db:seed
+```
+
+El seed inserta o actualiza cada documento usando su campo `id`; se puede
+ejecutar más de una vez y no elimina documentos ajenos al catálogo fuente.
 
 Para iniciar el backend y el cliente juntos:
 
@@ -93,6 +123,8 @@ La primera entrega sigue desplegada en https://muebleria-hermanos.netlify.app/
 - React Router DOM
 - Node.js y Express 5
 - dotenv
+- MongoDB 8 en Docker Compose
+- Mongoose para el script de seed
 - CSS3
 - ESLint para análisis estático y linting
 - Prettier para el formato del código
@@ -114,6 +146,9 @@ Todas las respuestas tienen el formato `{ success, data, message }`.
 - `backend/controllers/`: lógica de cada endpoint
 - `backend/middlewares/`: middlewares del servidor, incluido el manejador centralizado de errores
 - `backend/data/`: datos locales de los productos
+- `backend/scripts/seed.js`: carga idempotente del catálogo local a MongoDB
+- `compose.yaml`: servicio MongoDB y volumen persistente de desarrollo
+- `.env.example`: plantilla de configuración local (copiar a `.env`)
 - `client/src/App.jsx`: estado global (productos y carrito) y definición de rutas
 - `client/src/shared/components/`: componentes reutilizables (`navbar/`, `footer/` y `product-card/`)
 - `client/src/pages/`: vistas principales
@@ -132,4 +167,4 @@ Todas las respuestas tienen el formato `{ success, data, message }`.
 - **Persistencia del carrito:** al iniciar, el carrito se lee de `localStorage` (clave `muebleria_carrito`) y un `useEffect` lo guarda cada vez que cambia. Si los datos guardados están dañados, el carrito empieza vacío.
 - **Llamadas a la API en `services/`:** los componentes no conocen las URLs ni el formato de respuesta.
 - **Proxy de Vite:** el cliente llama a rutas relativas (`/api/...`) y Vite las reenvía al backend, evitando problemas de CORS en desarrollo.
-- **Sin base de datos en esta entrega:** los productos se leen de archivos locales en `backend/data/`. Mongoose ya está instalado, pero la conexión con MongoDB queda para la siguiente etapa.
+- **API sin conexión a MongoDB por ahora:** los endpoints siguen leyendo los productos desde `backend/data/productos.js`; el contenedor y el seed preparan la base local sin cambiar las llamadas del backend.
