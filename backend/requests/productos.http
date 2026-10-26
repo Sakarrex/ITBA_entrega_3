@@ -1,0 +1,68 @@
+@base = http://localhost:3000/api/productos
+@id = 6adebd974fb159ecca38b479
+
+### Listar (copiá un _id de acá y pegalo arriba en @id)
+GET {{base}}
+
+### Obtener por id
+GET {{base}}/{{id}}
+
+### Id inexistente pero válido (404)
+GET {{base}}/000000000000000000000000
+
+### Id inválido (400)
+GET {{base}}/abc
+
+### Crear (201)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "nombre": "Mesa de prueba",
+  "categoria": "Mesas",
+  "precio": 150000,
+  "precioOriginal": null,
+  "oferta": false,
+  "imagenUrl": "https://ejemplo.com/mesa.jpg",
+  "alt": "Mesa de prueba",
+  "descripcion": "Mesa de prueba para el CRUD",
+  "material": "Roble",
+  "medidas": "120x80x75 cm",
+  "acabado": "Natural",
+  "stock": 5
+}
+
+### Crear con body inválido (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "precio": -5,
+  "stock": 1.5
+}
+
+### Actualizar
+PUT {{base}}/{{id}}
+Content-Type: application/json
+
+{
+  "nombre": "Mesa de prueba editada",
+  "categoria": "Mesas",
+  "precio": 160000,
+  "precioOriginal": 180000,
+  "oferta": true,
+  "imagenUrl": "https://ejemplo.com/mesa.jpg",
+  "alt": "Mesa de prueba",
+  "descripcion": "Mesa editada",
+  "material": "Roble",
+  "medidas": "120x80x75 cm",
+  "acabado": "Natural",
+  "stock": 3
+}
+
+### Eliminar (borrado real)
+DELETE {{base}}/{{id}}
+
+### Eliminar uno ya eliminado (404)
+DELETE {{base}}/{{id}}
