@@ -19,13 +19,18 @@ const seedProducts = async () => {
   try {
     await connection.asPromise();
 
-    const operations = PRODUCTOS.map((producto) => ({
-      updateOne: {
-        filter: { id: producto.id },
-        update: { $set: producto },
-        upsert: true,
-      },
-    }));
+    const operations = PRODUCTOS.map((producto) => {
+      const datos = { ...producto };
+      delete datos.id;
+
+      return {
+        updateOne: {
+          filter: { nombre: datos.nombre },
+          update: { $set: datos },
+          upsert: true,
+        },
+      };
+    });
 
     const result = await connection
       .collection('productos')

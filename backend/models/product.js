@@ -2,12 +2,6 @@ import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
-    id: {
-      type: Number,
-      required: true,
-      unique: true,
-      min: 1,
-    },
     nombre: {
       type: String,
       required: true,
@@ -32,7 +26,7 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    imagen: {
+    imagenUrl: {
       type: String,
       required: true,
     },
