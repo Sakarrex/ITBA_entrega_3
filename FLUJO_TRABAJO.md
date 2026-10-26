@@ -256,7 +256,8 @@ Ejemplos validos:
 - Frontend: Vite + React.
 - Backend: Express + dotenv.
 - MongoDB local: disponible en Docker Compose, con volumen persistente y seed manual del catálogo.
-- API: continúa leyendo los productos desde `backend/data/productos.js`; la conexión del backend a MongoDB todavía no está implementada.
+- Modelo Mongoose: definido en `backend/models/product.js` con validaciones para la colección `productos`.
+- API: continúa leyendo los productos desde `backend/data/productos.js`; el modelo todavía no está conectado a las rutas.
 - CORS y Helmet: retirados temporalmente para esta primera prueba.
 - Endpoint disponible: GET /api/health.
 - Tests automatizados: aun no configurados.

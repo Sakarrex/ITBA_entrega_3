@@ -146,6 +146,7 @@ Todas las respuestas tienen el formato `{ success, data, message }`.
 - `backend/controllers/`: lógica de cada endpoint
 - `backend/middlewares/`: middlewares del servidor, incluido el manejador centralizado de errores
 - `backend/data/`: datos locales de los productos
+- `backend/models/product.js`: esquema de Mongoose para documentos de productos en la colección `productos`
 - `backend/scripts/seed.js`: carga idempotente del catálogo local a MongoDB
 - `compose.yaml`: servicio MongoDB y volumen persistente de desarrollo
 - `.env.example`: plantilla de configuración local (copiar a `.env`)
@@ -167,4 +168,4 @@ Todas las respuestas tienen el formato `{ success, data, message }`.
 - **Persistencia del carrito:** al iniciar, el carrito se lee de `localStorage` (clave `muebleria_carrito`) y un `useEffect` lo guarda cada vez que cambia. Si los datos guardados están dañados, el carrito empieza vacío.
 - **Llamadas a la API en `services/`:** los componentes no conocen las URLs ni el formato de respuesta.
 - **Proxy de Vite:** el cliente llama a rutas relativas (`/api/...`) y Vite las reenvía al backend, evitando problemas de CORS en desarrollo.
-- **API sin conexión a MongoDB por ahora:** los endpoints siguen leyendo los productos desde `backend/data/productos.js`; el contenedor y el seed preparan la base local sin cambiar las llamadas del backend.
+- **Modelo de productos:** Mongoose define la estructura y validaciones de los documentos en `backend/models/product.js`. Los endpoints todavía leen el catálogo desde `backend/data/productos.js`; el modelo no está conectado a las rutas de la API.
