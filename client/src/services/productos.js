@@ -1,12 +1,35 @@
-const URL_PRODUCTOS = '/api/productos';
+// src/services/productos.js
+import api from './api';
 
-export async function obtenerProductos() {
-  const response = await fetch(URL_PRODUCTOS);
+// Obtener todos los productos
+export const getProductos = async () => {
+  const response = await api.get('/productos');
+  return response.data;
+};
 
-  if (!response.ok) {
-    throw new Error('No pudimos cargar los productos');
-  }
+// Obtener un producto por su _id (MongoDB)
+export const getProducto = async (id) => {
+  const response = await api.get(`/productos/${id}`);
+  return response.data;
+};
 
-  const resultado = await response.json();
-  return resultado.data;
-}
+// Crear un producto
+export const crearProducto = async (productoData) => {
+  const response = await api.post('/productos', productoData);
+  return response.data;
+};
+
+// Actualizar un producto
+export const actualizarProducto = async (id, productoData) => {
+  const response = await api.put(`/productos/${id}`, productoData);
+  return response.data;
+};
+
+// Eliminar un producto
+export const eliminarProducto = async (id) => {
+  const response = await api.delete(`/productos/${id}`);
+  return response.data;
+};
+
+// Exportamos también la función antigua para mantener compatibilidad con App.jsx
+export const obtenerProductos = getProductos;

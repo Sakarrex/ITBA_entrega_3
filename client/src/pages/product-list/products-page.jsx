@@ -9,12 +9,16 @@ export default function ProductsPage() {
   const [busqueda, setBusqueda] = useState('');
   const [categoria, setCategoria] = useState('');
 
+  const arrayProductos = Array.isArray(productos)
+    ? productos
+    : productos?.data || [];
+
   const categorias = [
-    ...new Set(productos.map((producto) => producto.categoria)),
+    ...new Set(arrayProductos.map((producto) => producto.categoria)),
   ];
   const consulta = busqueda.trim().toLowerCase();
 
-  const productosFiltrados = productos.filter((producto) => {
+  const productosFiltrados = arrayProductos.filter((producto) => {
     if (categoria && producto.categoria !== categoria) {
       return false;
     }

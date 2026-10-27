@@ -19,7 +19,15 @@ export default function ProductDetailPage() {
     return <p className="estado-error">{error}</p>;
   }
 
-  const producto = productos.find((item) => String(item.id) === productoId);
+  const arrayProductos = Array.isArray(productos)
+    ? productos
+    : productos?.data || [];
+
+  const producto = arrayProductos.find(
+    (item) =>
+      String(item._id) === String(productoId) ||
+      String(item.id) === String(productoId)
+  );
 
   if (!producto) {
     return (

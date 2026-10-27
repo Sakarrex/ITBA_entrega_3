@@ -9,7 +9,7 @@ function ProductList({ productos, onSeleccionar, onAgregar }) {
     <section className="product-list-grid">
       {productos.map((producto) => (
         <ProductCard
-          key={producto.id}
+          key={producto._id}
           producto={producto}
           onSeleccionar={onSeleccionar}
           onAgregar={onAgregar}

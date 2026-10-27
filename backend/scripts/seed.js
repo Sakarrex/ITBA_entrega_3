@@ -21,7 +21,7 @@ const seedProducts = async () => {
 
     const operations = PRODUCTOS.map((producto) => {
       const datos = { ...producto };
-      delete datos.id;
+      delete datos._id;
 
       return {
         updateOne: {
