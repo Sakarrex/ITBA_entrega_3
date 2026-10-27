@@ -25,19 +25,22 @@ function obtenerCantidadPorPagina() {
   return 1;
 }
 
-function obtenerDestacados(productos) {
+function obtenerDestacados(productosInput) {
+  // Asegurarnos de que trabajamos con un arreglo real
+  const productos = Array.isArray(productosInput)
+    ? productosInput
+    : productosInput?.data || [];
+
   const max_productos_destacados = 6;
   if (productos.length <= max_productos_destacados) {
     return productos;
   }
-  var productosCopia = [
-    ...productos,
-  ]; /*copiar array para no modificar el original*/
+  var productosCopia = [...productos];
   const destacados = [];
   for (let i = 0; i < max_productos_destacados; i++) {
     const rand_pos = Math.floor(Math.random() * productosCopia.length);
     destacados.push(productosCopia[rand_pos]);
-    productosCopia.splice(rand_pos, 1); /*evitar repetidos*/
+    productosCopia.splice(rand_pos, 1);
   }
   return destacados;
 }
@@ -165,10 +168,12 @@ export default function HomePage() {
                       >
                         {pagina.map((producto) => (
                           <ProductCard
-                            key={producto.id}
+                            key={producto._id || producto.id}
                             producto={producto}
                             onSeleccionar={() =>
-                              navigate(`/productos/${producto.id}`)
+                              navigate(
+                                `/productos/${producto._id || producto.id}`
+                              )
                             }
                             onAgregar={agregarAlCarrito}
                           />

@@ -6,7 +6,7 @@ export const PRODUCTOS = [
     precio: 899999.99,
     precioOriginal: 1099999.99,
     oferta: true,
-    imagenUrl: '/assets/img/Sofá Patagonia.png',
+    imagenUrl: '/assets/img/sofa_patagonia.png',
     alt: 'Sofá de tres cuerpos tapizado en lino natural',
     descripcion:
       'Un sofá de tres cuerpos que invita a quedarse. Su estructura de lenga maciza y el tapizado en lino de fibra larga lo vuelven tan resistente como cómodo. Los almohadones de asiento son reversibles y desenfundables, pensados para acompañar la vida real de una casa.',
@@ -23,7 +23,7 @@ export const PRODUCTOS = [
     precio: 429999.99,
     precioOriginal: null,
     oferta: false,
-    imagenUrl: '/assets/img/Sillón Copacabana.png',
+    imagenUrl: '/assets/img/sillon_copacabana.png',
     alt: 'Sillón individual de líneas curvas con patas de madera',
     descripcion:
       'Homenaje al diseño brasileño de los años sesenta. Las curvas del respaldo se trabajan con madera laminada al vapor, una técnica artesanal que lleva tres días por pieza. El resultado es un sillón que abraza sin apretar.',
@@ -39,7 +39,7 @@ export const PRODUCTOS = [
     precio: 314999.99,
     precioOriginal: 379999.99,
     oferta: true,
-    imagenUrl: '/assets/img/Butaca Mendoza.png',
+    imagenUrl: '/assets/img/butaca_mendoza.png',
     alt: 'Butaca baja con respaldo de listones de madera',
     descripcion:
       'Inspirada en las galerías de las bodegas cuyanas. El respaldo de listones separados deja pasar el aire y aliviana visualmente la pieza, ideal para espacios chicos donde un sillón macizo pesaría demasiado.',
@@ -55,7 +55,7 @@ export const PRODUCTOS = [
     precio: 749999.99,
     precioOriginal: null,
     oferta: false,
-    imagenUrl: '/assets/img/Mesa Comedor Pampa.png',
+    imagenUrl: '/assets/img/mesa_comedor_pampa.png',
     alt: 'Mesa de comedor rectangular de madera maciza para seis personas',
     descripcion:
       'Una tabla única de algarrobo de más de dos metros, con la veta a la vista y los bordes respetando la forma original del árbol. Cada mesa es irrepetible porque ninguna tabla lo es. Entra cómoda para seis personas y aprieta para ocho.',
@@ -71,7 +71,7 @@ export const PRODUCTOS = [
     precio: 259999.99,
     precioOriginal: 299999.99,
     oferta: true,
-    imagenUrl: '/assets/img/Sillas Córdoba.png',
+    imagenUrl: '/assets/img/sillas_cordoba.png',
     alt: 'Juego de dos sillas de comedor con asiento de fibra trenzada',
     descripcion:
       'Se venden por par. El asiento se teje a mano en fibra de totora siguiendo un patrón serrano tradicional, un trabajo de seis horas por silla. Livianas de levantar, firmes de sentar.',
@@ -87,7 +87,7 @@ export const PRODUCTOS = [
     precio: 689999.99,
     precioOriginal: null,
     oferta: false,
-    imagenUrl: '/assets/img/Aparador Uspallata.png',
+    imagenUrl: '/assets/img/aparador_uspallata.png',
     alt: 'Aparador bajo de cuatro puertas con frentes ranurados',
     descripcion:
       'Cuatro puertas con frentes ranurados a mano, cepillo por cepillo. Adentro, estantes regulables y un cajón forrado en fieltro para los cubiertos. Las bisagras son de bronce macizo y se ajustan con un destornillador común.',
@@ -103,7 +103,7 @@ export const PRODUCTOS = [
     precio: 289999.99,
     precioOriginal: null,
     oferta: false,
-    imagenUrl: '/assets/img/Mesa de Centro Araucaria.png',
+    imagenUrl: '/assets/img/mesa_de_centro_araucaria.png',
     alt: 'Mesa ratona redonda de madera clara con estante inferior',
     descripcion:
       'Redonda a propósito: sin esquinas, circula mejor en livings chicos y es más segura si hay chicos en casa. El estante inferior resuelve el desorden de revistas y controles remotos sin agregar un mueble más.',
@@ -119,7 +119,7 @@ export const PRODUCTOS = [
     precio: 179999.99,
     precioOriginal: 219999.99,
     oferta: true,
-    imagenUrl: '/assets/img/Mesa de Noche Aconcagua.png',
+    imagenUrl: '/assets/img/mesa_de_noche_aconcagua.png',
     alt: 'Mesa de luz de dos cajones con patas cónicas',
     descripcion:
       'Dos cajones con guías de madera sobre madera, sin metal: se abren en silencio y no se oxidan con la humedad. Las patas cónicas levantan el mueble del piso y hacen que la habitación respire.',
@@ -135,7 +135,7 @@ export const PRODUCTOS = [
     precio: 619999.99,
     precioOriginal: 799999.99,
     oferta: true,
-    imagenUrl: '/assets/img/Biblioteca Recoleta.png',
+    imagenUrl: '/assets/img/biblioteca_recoleta.png',
     alt: 'Biblioteca alta de cinco estantes en madera maciza',
     descripcion:
       'Cinco estantes que aguantan lo que les pongas: cada uno soporta cuarenta kilos sin curvarse, gracias a un travesaño posterior oculto. Se ancla a la pared con dos tarugos incluidos en la entrega.',
@@ -151,7 +151,7 @@ export const PRODUCTOS = [
     precio: 469999.99,
     precioOriginal: null,
     oferta: false,
-    imagenUrl: '/assets/img/Escritorio Costa.png',
+    imagenUrl: '/assets/img/escritorio_costa.png',
     alt: 'Escritorio de trabajo con cajonera lateral y pasacables',
     descripcion:
       'Pensado para trabajar de verdad. Tiene un pasacables integrado en la tapa, una bandeja oculta bajo el tablero para la notebook y una cajonera lateral que se puede montar a izquierda o derecha según tu espacio.',
@@ -167,7 +167,7 @@ export const PRODUCTOS = [
     precio: 209999.99,
     precioOriginal: null,
     oferta: false,
-    imagenUrl: '/assets/img/Silla de Trabajo Belgrano.png',
+    imagenUrl: '/assets/img/silla_de_trabajo_belgrano.png',
     alt: 'Silla de escritorio de madera con respaldo curvo tapizado',
     descripcion:
       'El respaldo curvo se moldea al vapor para acompañar la curva lumbar, así que se puede pasar la tarde sentado sin quejarse. El asiento tapizado se desenfunda con cierre para lavarlo.',

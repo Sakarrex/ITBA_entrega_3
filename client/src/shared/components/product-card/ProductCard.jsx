@@ -8,7 +8,7 @@ const formatearPrecio = new Intl.NumberFormat('es-AR', {
 });
 
 export default function ProductCard({ producto, onSeleccionar, onAgregar }) {
-  const { nombre, precio, precioOriginal, oferta, imagen, categoria } =
+  const { nombre, precio, precioOriginal, oferta, imagenUrl, categoria } =
     producto;
 
   return (
@@ -29,9 +29,9 @@ export default function ProductCard({ producto, onSeleccionar, onAgregar }) {
       }}
     >
       {oferta && <span className="product-card-badge">OFERTA</span>}
-      {imagen && (
+      {imagenUrl && (
         <img
-          src={imagen}
+          src={imagenUrl}
           alt={nombre}
           className="product-card-image"
           loading="lazy"

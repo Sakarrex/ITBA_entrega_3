@@ -21,7 +21,10 @@ function ProductDetail({ producto, onVolver, onAgregar }) {
       <div className="product-detail-card">
         <div className="product-detail-main">
           <div className="product-detail-media">
-            <img src={producto.imagen} alt={producto.alt || producto.nombre} />
+            <img
+              src={producto.imagenUrl}
+              alt={producto.alt || producto.nombre}
+            />
           </div>
 
           <div className="product-detail-info">
