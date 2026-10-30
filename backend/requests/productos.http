@@ -1,5 +1,5 @@
 @base = http://localhost:3000/api/productos
-@id = 6adebd974fb159ecca38b479
+@id = 6ae3dff149f30734f26b09c3
 
 ### Listar (copiá un _id de acá y pegalo arriba en @id)
 GET {{base}}
@@ -61,7 +61,7 @@ Content-Type: application/json
   "stock": 3
 }
 
-### Eliminar (borrado real)
+### Eliminar (borrado lógico)
 DELETE {{base}}/{{id}}
 
 ### Eliminar uno ya eliminado (404)

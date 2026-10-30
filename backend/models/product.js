@@ -56,6 +56,10 @@ const productSchema = new mongoose.Schema(
       min: 0,
       validate: Number.isInteger,
     },
+    activo: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     collection: 'productos',
