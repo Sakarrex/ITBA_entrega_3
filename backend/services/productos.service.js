@@ -1,8 +1,12 @@
 import Product from '../models/product.js';
 
-export const listarProductos = () => Product.find().sort({ _id: 1 }).lean();
+const soloActivos = { activo: { $ne: false } };
 
-export const buscarProducto = (id) => Product.findById(id).lean();
+export const listarProductos = () =>
+  Product.find(soloActivos).sort({ _id: 1 }).lean();
+
+export const buscarProducto = (id) =>
+  Product.findOne({ _id: id, ...soloActivos }).lean();
 
 export const crearProducto = async (datos) => {
   const producto = await Product.create(datos);
@@ -10,9 +14,14 @@ export const crearProducto = async (datos) => {
 };
 
 export const actualizarProducto = (id, datos) =>
-  Product.findByIdAndUpdate(id, datos, {
+  Product.findOneAndUpdate({ _id: id, ...soloActivos }, datos, {
     new: true,
     runValidators: true,
   }).lean();
 
-export const eliminarProducto = (id) => Product.findByIdAndDelete(id).lean();
+export const eliminarProducto = (id) =>
+  Product.findOneAndUpdate(
+    { _id: id, ...soloActivos },
+    { activo: false },
+    { new: true }
+  ).lean();

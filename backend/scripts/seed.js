@@ -20,7 +20,7 @@ const seedProducts = async () => {
     await connection.asPromise();
 
     const operations = PRODUCTOS.map((producto) => {
-      const datos = { ...producto };
+      const datos = { ...producto, activo: true };
       delete datos._id;
 
       return {
