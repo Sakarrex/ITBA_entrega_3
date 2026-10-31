@@ -1,78 +1,57 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import './contact-page.css';
 
-const VALORES_INICIALES = {
-  name: '',
-  email: '',
-  phone: '',
-  subject: '',
-  message: '',
-};
-
-const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const REGEX_TELEFONO = /^\+?[\d\s()-]{8,20}$/;
-
-function validarFormulario(valores) {
-  const errores = {};
-  const nombre = valores.name.trim();
-  const email = valores.email.trim();
-  const telefono = valores.phone.trim();
-  const mensaje = valores.message.trim();
-
-  if (!nombre) {
-    errores.name = 'Ingresá tu nombre y apellido.';
-  } else if (nombre.length < 3) {
-    errores.name = 'El nombre debe tener al menos 3 caracteres.';
-  }
-
-  if (!email) {
-    errores.email = 'Ingresá tu correo.';
-  } else if (!REGEX_EMAIL.test(email)) {
-    errores.email = 'Ingresá un correo válido, por ejemplo nombre@email.com.';
-  }
-
-  if (telefono && !REGEX_TELEFONO.test(telefono)) {
-    errores.phone = 'Ingresá un teléfono válido, por ejemplo +54 11 2345-6789.';
-  }
-
-  if (!valores.subject) {
-    errores.subject = 'Elegí un motivo de contacto.';
-  }
-
-  if (!mensaje) {
-    errores.message = 'Escribí tu mensaje.';
-  } else if (mensaje.length < 10) {
-    errores.message = 'El mensaje debe tener al menos 10 caracteres.';
-  }
-
-  return errores;
-}
+const contactoSchema = yup.object({
+  name: yup
+    .string()
+    .trim()
+    .required('Ingresá tu nombre y apellido.')
+    .min(3, 'El nombre debe tener al menos 3 caracteres.'),
+  email: yup
+    .string()
+    .trim()
+    .required('Ingresá tu correo.')
+    .email('Ingresá un correo válido, por ejemplo nombre@email.com.'),
+  phone: yup
+    .string()
+    .trim()
+    .matches(/^\+?[\d\s()-]{8,20}$/, {
+      message: 'Ingresá un teléfono válido, por ejemplo +54 11 2345-6789.',
+      excludeEmptyString: true,
+    }),
+  subject: yup.string().required('Elegí un motivo de contacto.'),
+  message: yup
+    .string()
+    .trim()
+    .required('Escribí tu mensaje.')
+    .min(10, 'El mensaje debe tener al menos 10 caracteres.'),
+});
 
 export default function ContactPage() {
-  const [valores, setValores] = useState(VALORES_INICIALES);
-  const [errores, setErrores] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: errores },
+  } = useForm({
+    resolver: yupResolver(contactoSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: '',
+    },
+  });
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-
-    setValores((actuales) => ({ ...actuales, [name]: value }));
-    setErrores((actuales) => ({ ...actuales, [name]: '' }));
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const erroresNuevos = validarFormulario(valores);
-    setErrores(erroresNuevos);
-
-    if (Object.keys(erroresNuevos).length > 0) {
-      return;
-    }
-
-    setValores(VALORES_INICIALES);
+  function enviarFormulario() {
+    reset();
     setIsSuccess(true);
   }
 
@@ -82,7 +61,7 @@ export default function ContactPage() {
         <div className={`contact-form-card ${isSuccess ? 'is-success' : ''}`}>
           <form
             className="contact-form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(enviarFormulario)}
             noValidate
             hidden={isSuccess}
           >
@@ -98,16 +77,15 @@ export default function ContactPage() {
               <input
                 type="text"
                 id="name"
-                name="name"
+                {...register('name')}
                 placeholder="Nombre completo"
-                value={valores.name}
-                onChange={handleChange}
+
                 aria-invalid={Boolean(errores.name)}
                 aria-describedby="name-error"
                 required
               />
               <p className="form-error" id="name-error" role="alert">
-                {errores.name}
+                {errores.name?.message}
               </p>
             </div>
 
@@ -121,16 +99,15 @@ export default function ContactPage() {
               <input
                 type="email"
                 id="email"
-                name="email"
+                {...register('email')}
                 placeholder="ejemplo@email.com"
-                value={valores.email}
-                onChange={handleChange}
+
                 aria-invalid={Boolean(errores.email)}
                 aria-describedby="email-error"
                 required
               />
               <p className="form-error" id="email-error" role="alert">
-                {errores.email}
+                {errores.email?.message}
               </p>
             </div>
 
@@ -139,15 +116,14 @@ export default function ContactPage() {
               <input
                 type="tel"
                 id="phone"
-                name="phone"
+                {...register('phone')}
                 placeholder="+54 11 2345-6789"
-                value={valores.phone}
-                onChange={handleChange}
+
                 aria-invalid={Boolean(errores.phone)}
                 aria-describedby="phone-error"
               />
               <p className="form-error" id="phone-error" role="alert">
-                {errores.phone}
+                {errores.phone?.message}
               </p>
             </div>
 
@@ -160,9 +136,8 @@ export default function ContactPage() {
               </label>
               <select
                 id="subject"
-                name="subject"
-                value={valores.subject}
-                onChange={handleChange}
+                {...register('subject')}
+
                 aria-invalid={Boolean(errores.subject)}
                 aria-describedby="subject-error"
                 required
@@ -174,7 +149,7 @@ export default function ContactPage() {
                 <option value="otro">Otro</option>
               </select>
               <p className="form-error" id="subject-error" role="alert">
-                {errores.subject}
+                {errores.subject?.message}
               </p>
             </div>
 
@@ -187,17 +162,16 @@ export default function ContactPage() {
               </label>
               <textarea
                 id="message"
-                name="message"
+                {...register('message')}
                 rows="6"
                 placeholder="Escribí tu mensaje aquí..."
-                value={valores.message}
-                onChange={handleChange}
+
                 aria-invalid={Boolean(errores.message)}
                 aria-describedby="message-error"
                 required
               ></textarea>
               <p className="form-error" id="message-error" role="alert">
-                {errores.message}
+                {errores.message?.message}
               </p>
             </div>
 

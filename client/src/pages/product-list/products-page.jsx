@@ -97,7 +97,7 @@ export default function ProductsPage() {
               <ProductList
                 productos={productosFiltrados}
                 onSeleccionar={(producto) =>
-                  navigate(`/productos/${producto.id}`)
+                  navigate(`/productos/${producto._id}`)
                 }
                 onAgregar={agregarAlCarrito}
               />
