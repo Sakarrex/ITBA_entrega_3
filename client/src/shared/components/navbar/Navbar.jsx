@@ -59,6 +59,11 @@ function Navbar({ cantidadCarrito }) {
                 Contacto
               </Link>
             </li>
+            <li>
+              <Link to="/admin" onClick={() => setMenuAbierto(false)}>
+                Admin
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>

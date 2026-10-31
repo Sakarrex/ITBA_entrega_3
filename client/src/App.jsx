@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Route,
@@ -9,6 +9,9 @@ import {
 
 import Navbar from './shared/components/navbar/Navbar.jsx';
 import Footer from './shared/components/footer/Footer.jsx';
+import AdminPage from './pages/admin/admin-page.jsx';
+import CreateProductPage from './pages/admin/create-product-page.jsx';
+import EditProductPage from './pages/admin/edit-product-page.jsx';
 import CartPage from './pages/cart-page/cart-page.jsx';
 import ContactPage from './pages/contact-page/contact-page.jsx';
 import HomePage from './pages/home-page/home-page.jsx';
@@ -39,6 +42,7 @@ function AppLayout({
   productos,
   cargando,
   error,
+  recargarProductos,
   carrito,
   agregarAlCarrito,
   cambiarCantidad,
@@ -66,6 +70,7 @@ function AppLayout({
             productos,
             cargando,
             error,
+            recargarProductos,
             carrito,
             agregarAlCarrito,
             cambiarCantidad,
@@ -87,24 +92,29 @@ function App() {
 
   const [carrito, setCarrito] = useState(cargarCarritoInicial);
 
+  const recargarProductos = useCallback(async () => {
+    try {
+      const datos = await obtenerProductos();
+      setProductos(datos);
+      setError(null);
+    } catch (err) {
+      console.error('Error al cargar los productos:', err);
+
+      setError(
+        'No se han cargado los datos. Recargá la página para intentar de nuevo.'
+      );
+    } finally {
+      setCargando(false);
+    }
+  }, []);
+
   useEffect(() => {
     async function cargarProductos() {
-      try {
-        const datos = await obtenerProductos();
-        setProductos(datos);
-      } catch (err) {
-        console.error('Error al cargar los productos:', err);
-
-        setError(
-          'No se han cargado los datos. Recargá la página para intentar de nuevo.'
-        );
-      } finally {
-        setCargando(false);
-      }
+      await recargarProductos();
     }
 
     cargarProductos();
-  }, []);
+  }, [recargarProductos]);
 
   useEffect(() => {
     localStorage.setItem(CLAVE_LOCAL_STORAGE, JSON.stringify(carrito));
@@ -172,6 +182,7 @@ function App() {
     productos,
     cargando,
     error,
+    recargarProductos,
     carrito,
     agregarAlCarrito,
     cambiarCantidad,
@@ -192,6 +203,15 @@ function App() {
           <Route path="carrito" element={<CartPage />} />
 
           <Route path="contacto" element={<ContactPage />} />
+
+          <Route path="admin" element={<AdminPage />} />
+
+          <Route path="admin/crear-producto" element={<CreateProductPage />} />
+
+          <Route
+            path="admin/editar-producto/:productoId"
+            element={<EditProductPage />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
