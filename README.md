@@ -169,3 +169,4 @@ Todas las respuestas tienen el formato `{ success, data, message }`.
 - **Llamadas a la API en `services/`:** los componentes no conocen las URLs ni el formato de respuesta.
 - **Proxy de Vite:** el cliente llama a rutas relativas (`/api/...`) y Vite las reenvía al backend, evitando problemas de CORS en desarrollo.
 - **Modelo de productos:** Mongoose define la estructura y validaciones de los documentos en `backend/models/product.js`. Los endpoints todavía leen el catálogo desde `backend/data/productos.js`; el modelo no está conectado a las rutas de la API.
+- **Url de imagen en formulario de objetos:** Los formularios para crear y editar productos se colocan la url dentro del pryecto. Esto no es lo ideal desde el punto de vista del usuario, ya que se tendira que almacenar en un servicio de 3ros las imagenes para mejor disponibilidad. Pero por motivos de tiempo y simpleza se deja esta modalidad para la entrega.
