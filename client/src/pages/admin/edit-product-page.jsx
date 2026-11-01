@@ -21,9 +21,16 @@ export default function EditProductPage() {
     async function cargarProducto() {
       try {
         const respuesta = await getProducto(productoId);
+        const productoActual = respuesta.data;
+        const precioOriginal =
+          productoActual.oferta && productoActual.precioOriginal != null
+            ? productoActual.precioOriginal
+            : productoActual.precio;
+
         setProducto({
-          ...respuesta.data,
-          precioOriginal: respuesta.data.precioOriginal ?? '',
+          ...productoActual,
+          precioOriginal,
+          precioOferta: productoActual.oferta ? productoActual.precio : '',
         });
       } catch (err) {
         setError(

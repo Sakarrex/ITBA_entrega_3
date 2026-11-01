@@ -14,8 +14,8 @@ export const CATEGORIAS = ['Living', 'Comedor', 'Dormitorio', 'Estudio'];
 export const VALORES_INICIALES = {
   nombre: '',
   categoria: '',
-  precio: '',
   precioOriginal: '',
+  precioOferta: '',
   oferta: false,
   stock: '',
   imagenUrl: '',
@@ -32,14 +32,28 @@ export const productoSchema = yup.object({
     .string()
     .oneOf(CATEGORIAS, 'Elegí una categoría.')
     .required('Elegí una categoría.'),
-  precio: numero('Ingresá un precio válido.'),
   precioOriginal: yup
     .number()
-    .transform((valor, original) => (original === '' ? null : valor))
-    .typeError('Ingresá un precio válido.')
+    .typeError('Ingresá un precio original válido.')
     .min(0, 'No puede ser negativo.')
-    .nullable(),
+    .required('Ingresá un precio original válido.'),
   oferta: yup.boolean().default(false),
+  precioOferta: yup
+    .number()
+    .transform((valor, original) => (original === '' ? null : valor))
+    .typeError('Ingresá un precio de oferta válido.')
+    .when('oferta', {
+      is: true,
+      then: (schema) =>
+        schema
+          .min(0, 'El precio de oferta no puede ser negativo.')
+          .lessThan(
+            yup.ref('precioOriginal'),
+            'El precio de oferta debe ser menor al precio base.'
+          )
+          .required('Ingresá el precio final de oferta.'),
+      otherwise: (schema) => schema.nullable(),
+    }),
   stock: numero('Ingresá el stock.').integer('El stock debe ser un entero.'),
   imagenUrl: texto('Ingresá la URL de la imagen.'),
   alt: texto('Ingresá un texto alternativo para la imagen.'),

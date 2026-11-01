@@ -8,10 +8,9 @@ import './product-form.css';
 const CAMPOS = [
   { name: 'nombre', label: 'Nombre', placeholder: 'Sofá Patagonia' },
   { name: 'categoria', label: 'Categoría', opciones: CATEGORIAS },
-  { name: 'precio', label: 'Precio', type: 'number', step: '0.01' },
   {
     name: 'precioOriginal',
-    label: 'Precio original (opcional)',
+    label: 'Precio Base',
     type: 'number',
     step: '0.01',
   },
@@ -58,6 +57,8 @@ export default function ProductForm({
     defaultValues: valoresIniciales,
   });
   const nombre = useWatch({ control, name: 'nombre' });
+  const oferta = useWatch({ control, name: 'oferta' });
+  const precioOriginal = useWatch({ control, name: 'precioOriginal' });
 
   useEffect(() => {
     reset(valoresIniciales);
@@ -71,7 +72,21 @@ export default function ProductForm({
 
   async function enviarFormulario(datos) {
     try {
-      await onGuardar(datos);
+      const {
+        precioOferta,
+        precioOriginal,
+        oferta: esOferta,
+        ...producto
+      } = datos;
+      const montoOriginal = Number(precioOriginal);
+      const precio = esOferta ? Number(precioOferta) : montoOriginal;
+
+      await onGuardar({
+        ...producto,
+        precio,
+        precioOriginal: esOferta ? montoOriginal : null,
+        oferta: esOferta,
+      });
     } catch (error) {
       setError('root.serverError', { message: obtenerMensajeError(error) });
     }
@@ -145,6 +160,25 @@ export default function ProductForm({
         <input type="checkbox" {...register('oferta')} />
         Producto en oferta
       </label>
+
+      {oferta && (
+        <div className="product-form-group">
+          <label htmlFor="precioOferta">Precio final de oferta</label>
+          <input
+            id="precioOferta"
+            type="number"
+            min="0"
+            max={precioOriginal || undefined}
+            step="0.01"
+            placeholder="Ej.: 85000"
+            aria-invalid={Boolean(errors.precioOferta)}
+            {...register('precioOferta')}
+          />
+          {errors.precioOferta && (
+            <p className="product-form-error">{errors.precioOferta.message}</p>
+          )}
+        </div>
+      )}
 
       <button
         type="submit"
