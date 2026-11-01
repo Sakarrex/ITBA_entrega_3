@@ -24,6 +24,7 @@ export default function CreateProductPage() {
           titulo="Crear producto"
           textoBoton="CREAR PRODUCTO"
           valoresIniciales={VALORES_INICIALES}
+          altAutomatico
           onGuardar={guardarProducto}
         />
       </div>

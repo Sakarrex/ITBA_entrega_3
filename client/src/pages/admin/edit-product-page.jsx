@@ -70,6 +70,7 @@ export default function EditProductPage() {
           titulo={`Editar ${producto.nombre}`}
           textoBoton="GUARDAR CAMBIOS"
           valoresIniciales={producto}
+          altAutomatico
           onGuardar={guardarProducto}
         />
       </div>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { CATEGORIAS, productoSchema } from '../producto-schema.js';
@@ -43,21 +43,31 @@ export default function ProductForm({
   textoBoton,
   valoresIniciales,
   onGuardar,
+  altAutomatico = false,
 }) {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    control,
     setError,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(productoSchema, { stripUnknown: true }),
     defaultValues: valoresIniciales,
   });
+  const nombre = useWatch({ control, name: 'nombre' });
 
   useEffect(() => {
     reset(valoresIniciales);
   }, [valoresIniciales, reset]);
+
+  useEffect(() => {
+    if (altAutomatico) {
+      setValue('alt', nombre?.trim() ? `imagen ${nombre.trim()}` : '');
+    }
+  }, [altAutomatico, nombre, setValue]);
 
   async function enviarFormulario(datos) {
     try {
@@ -83,37 +93,38 @@ export default function ProductForm({
 
       <div className="product-form-grid">
         {CAMPOS.map(
-          ({ name, label, type = 'text', step, placeholder, opciones }) => (
-            <div className="product-form-group" key={name}>
-              <label htmlFor={name}>{label}</label>
-              {opciones ? (
-                <select
-                  id={name}
-                  aria-invalid={Boolean(errors[name])}
-                  {...register(name)}
-                >
-                  <option value="">Elegí una opción</option>
-                  {opciones.map((opcion) => (
-                    <option key={opcion} value={opcion}>
-                      {opcion}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  id={name}
-                  type={type}
-                  step={step}
-                  placeholder={placeholder}
-                  aria-invalid={Boolean(errors[name])}
-                  {...register(name)}
-                />
-              )}
-              {errors[name] && (
-                <p className="product-form-error">{errors[name].message}</p>
-              )}
-            </div>
-          )
+          ({ name, label, type = 'text', step, placeholder, opciones }) =>
+            altAutomatico && name === 'alt' ? null : (
+              <div className="product-form-group" key={name}>
+                <label htmlFor={name}>{label}</label>
+                {opciones ? (
+                  <select
+                    id={name}
+                    aria-invalid={Boolean(errors[name])}
+                    {...register(name)}
+                  >
+                    <option value="">Elegí una opción</option>
+                    {opciones.map((opcion) => (
+                      <option key={opcion} value={opcion}>
+                        {opcion}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <input
+                    id={name}
+                    type={type}
+                    step={step}
+                    placeholder={placeholder}
+                    aria-invalid={Boolean(errors[name])}
+                    {...register(name)}
+                  />
+                )}
+                {errors[name] && (
+                  <p className="product-form-error">{errors[name].message}</p>
+                )}
+              </div>
+            )
         )}
       </div>
 
